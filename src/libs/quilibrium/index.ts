@@ -39,8 +39,21 @@ class QuilibriumGrpcClient {
     })
   }
 
-  
+  balance(address: string): Promise<any> {
+    return this.callMethod("balance", { address })
+  }
 
+  send() {
+    // ...
+  }
+
+  merge() {
+    // ...
+  }
+
+  coins() {
+    // ...
+  }
 }
 
 export default QuilibriumGrpcClient
