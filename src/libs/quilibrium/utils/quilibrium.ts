@@ -1,5 +1,4 @@
-import { ed448 } from '@noble/curves/ed448'
-import PeerId from 'peer-id'
+import { IDFromPublicKey } from '~libs/quilibrium/crypto/peer'
 
 export function getPrivKey(account: string): string {
   return '0x'
@@ -12,7 +11,7 @@ export async function privKeyToPeerId(peerPrivKey: string): Promise<string> {
 
   const pubKey = ed448Extra.pubKey
 
-  const id = await PeerId.createFromPubKey(pubKey)
+  const id = IDFromPublicKey(pubKey)
 
   return id.toString()
 }
