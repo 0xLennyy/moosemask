@@ -1,0 +1,38 @@
+.header {
+  @apply w-full;
+  @apply flex;
+  @apply justify-center;
+  @apply items-center;
+  @apply h-16;
+  box-shadow: 0 2px 8px 0 #0000001a;
+
+  .header-content {
+    @apply text-center;
+
+    .content-account {
+      @apply flex;
+      @apply items-center;
+      @apply gap-2;
+
+      .account-title {
+        @apply font-semibold;
+        @apply text-lg;
+      }
+
+      img {
+        @apply flex-shrink-0;
+        @apply w-4;
+        @apply h-4;
+        transform: rotate(270deg);
+      }
+    }
+
+    .content-code {
+      @apply flex;
+      @apply items-center;
+      @apply gap-2;
+      @apply text-sm;
+      @apply text-gray-500;
+    }
+  }
+}
