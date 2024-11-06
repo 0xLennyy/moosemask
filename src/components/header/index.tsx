@@ -3,13 +3,32 @@ import style from "./index.module.less";
 import ArrowLeft from "@/assets/icons/arrow-left.svg";
 import Copy from "@/assets/icons/copy.svg";
 import SwitchAccount from "../switch-account";
+import { useState } from "react";
 
 const header = () => {
+  const [switchAccountVisible, setSwitchAccountVisible] =
+    useState<boolean>(false);
+
+  const switchAccount = {
+    open: () => {
+      setSwitchAccountVisible(true);
+    },
+    onOk: () => {
+      setSwitchAccountVisible(false);
+    },
+    onCancel: () => {
+      setSwitchAccountVisible(false);
+    },
+  };
+
   return (
     <>
       <div className={style.header}>
         <div className={style["header-content"]}>
-          <div className={style["content-account"]}>
+          <div
+            className={style["content-account"]}
+            onClick={switchAccount.open}
+          >
             <div className={style["account-title"]}>Account</div>
             <img src={ArrowLeft} />
           </div>
@@ -22,7 +41,11 @@ const header = () => {
           </div>
         </div>
       </div>
-      <SwitchAccount visible />
+      <SwitchAccount
+        visible={switchAccountVisible}
+        onOk={switchAccount.onOk}
+        onCancel={switchAccount.onCancel}
+      />
     </>
   );
 };

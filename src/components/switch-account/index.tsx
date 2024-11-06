@@ -27,27 +27,30 @@ const SwitchAccount = (props: {
   }, [step]);
 
   return visible ? (
-    <div className="fixed inset-0 z-[1000] bg-[#00000099]">
+    <div className="fixed inset-0 z-[1000] bg-[#00000099]" onClick={onCancel}>
       <div
         className="absolute top-8 left-[50%] w-[408px] rounded-lg bg-white"
         style={{
           boxShadow: "0 2px 40px 0 #0000001a",
           transform: "translateX(-50%)",
         }}
+        onClick={(e) => e.stopPropagation()}
       >
         <div className="relative p-4">
           {step !== "index" ? (
             <img
-              className="w-4 h-4 absolute top-[50%] left-4"
+              className="w-4 h-4 absolute top-[50%] left-4 cursor-pointer"
               src={ArrowLeft}
+              style={{ transform: "translateY(-50%)" }}
               onClick={() => setStep(step === "nav" ? "index" : "nav")}
             />
           ) : undefined}
           <div className="text-xl font-semibold text-center">{title}</div>
           <img
-            className="w-4 h-4 absolute top-[50%] right-4"
+            className="w-4 h-4 absolute top-[50%] right-4 cursor-pointer"
             src={Close}
             style={{ transform: "translateY(-50%)" }}
+            onClick={onCancel}
           />
         </div>
         {step === "index" ? (
@@ -74,7 +77,7 @@ const SwitchAccount = (props: {
                 </div>
               </div>
             </div>
-            <div className="mt-2 mx-4 mb-4 h-[46px] overflow-hidden rounded-3xl flex justify-center items-center gap-2 text-[#0376c9] border border-solid border-[#0376c9]">
+            <div className="mt-2 mx-4 mb-4 h-[46px] overflow-hidden rounded-3xl flex justify-center items-center gap-2 text-[#0376c9] border border-solid border-[#0376c9] cursor-pointer">
               <img
                 className="w-4 h-4"
                 src={Add}
@@ -88,7 +91,7 @@ const SwitchAccount = (props: {
           </>
         ) : undefined}
         {step === "nav" ? (
-          <div className="p-4 flex flex-col gap-4 text-[#0376c9]">
+          <div className="p-4 flex flex-col gap-4 text-[#0376c9] cursor-pointer">
             <div
               onClick={() => {
                 setInputAccount("");
@@ -97,7 +100,9 @@ const SwitchAccount = (props: {
             >
               添加新账号
             </div>
-            <div onClick={() => setStep("import")}>导入账号</div>
+            <div className="cursor-pointer" onClick={() => setStep("import")}>
+              导入账号
+            </div>
           </div>
         ) : undefined}
         {step === "add" ? (
@@ -116,12 +121,12 @@ const SwitchAccount = (props: {
             </div>
             <div className="flex items-center gap-2">
               <div
-                className="flex-1 h-10 flex justify-center items-center text-sm rounded-3xl border border-solid border-[#0376c9] text-[#0376c9]"
+                className="flex-1 h-10 flex justify-center items-center text-sm rounded-3xl border border-solid border-[#0376c9] text-[#0376c9] cursor-pointer"
                 onClick={() => setStep("index")}
               >
                 取消
               </div>
-              <div className="flex-1 h-10 flex justify-center items-center text-sm rounded-3xl border border-solid bg-[#0376c9] text-white">
+              <div className="flex-1 h-10 flex justify-center items-center text-sm rounded-3xl border border-solid bg-[#0376c9] text-white cursor-pointer">
                 添加账号
               </div>
             </div>
