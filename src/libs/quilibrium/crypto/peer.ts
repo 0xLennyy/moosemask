@@ -1,6 +1,6 @@
 import * as multihashes from 'multihashes'
 
-import { KeyType, PublicKey } from '~libs/quilibrium/protobufs/crypto'
+import { KeyType, PublicKey } from '~libs/quilibrium/protobufs/pb/crypto'
 
 const maxInlineKeyLength = 42
 let AdvancedEnableInlining = true

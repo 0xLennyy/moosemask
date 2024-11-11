@@ -1,5 +1,14 @@
-import * as grpc from "@grpc/grpc-js"
-import * as protoLoader from "@grpc/proto-loader"
+import * as grpc from '@grpc/grpc-js'
+import * as protoLoader from '@grpc/proto-loader'
+import { poseidon } from '@iden3/js-crypto'
+
+import { GetTokenInfoRequest } from '~libs/quilibrium/protobufs/pb/node_pb'
+import { NodeServiceClient } from '~libs/quilibrium/protobufs/pb/NodeServiceClientPb'
+import {
+  bigintToUint8Array,
+  privKeyToPeerId,
+  uint8ArrayToBigInt
+} from '~libs/quilibrium/utils/quilibrium'
 
 class QuilibriumGrpcClient {
   private client: grpc.Client
@@ -39,8 +48,23 @@ class QuilibriumGrpcClient {
     })
   }
 
-  balance(address: string): Promise<any> {
-    return this.callMethod("balance", { address })
+  async balance(peerPrivKey: string): Promise<any> {
+    // const client = await getGRPCClient()
+    const client = new NodeServiceClient('rpc.quilibrium.com:8337')
+
+    const peerId = await privKeyToPeerId(peerPrivKey)
+
+    const addr = poseidon.hashBytes(Buffer.from(peerId))
+    const addrBytes = bigintToUint8Array(addr)
+
+    const request = new GetTokenInfoRequest()
+    request.setAddress(addrBytes)
+    const response = await client.getTokenInfo(request)
+
+    uint8ArrayToBigInt(response.getOwnedTokens() as Uint8Array)
+    // TODO
+
+    return
   }
 
   send() {
@@ -54,6 +78,13 @@ class QuilibriumGrpcClient {
   coins() {
     // ...
   }
+}
+
+async function getGRPCClient() {
+  return new grpc.Client(
+    'rpc.quilibrium.com:8337',
+    grpc.credentials.createInsecure()
+  )
 }
 
 export default QuilibriumGrpcClient
